@@ -40,6 +40,19 @@ export class StreamBuffer {
 		this.fp += SIZE.UINT8;
 	}
 
+	public ReadInt8() {
+		let ret = 0;
+		ret = this.buf.readInt8(this.fp);
+		this.fp += SIZE.INT8;
+		return ret;
+	}
+
+	public WriteInt8(val: number) {
+		this.__size_check(SIZE.INT8);
+		this.buf.writeInt8(val, this.fp);
+		this.fp += SIZE.INT8;
+	}
+
 	public ReadUint16(use_be: boolean = false) {
 		let ret = 0;
 		if ( use_be ) {
@@ -61,6 +74,27 @@ export class StreamBuffer {
 		this.fp += SIZE.UINT16;
 	}
 
+	public ReadInt16(use_be: boolean = false) {
+		let ret = 0;
+		if ( use_be ) {
+			ret = this.buf.readInt16BE(this.fp);
+		} else {
+			ret = this.buf.readInt16LE(this.fp);
+		}
+		this.fp += SIZE.INT16;
+		return ret;
+	}
+
+	public WriteInt16(val: number, use_be: boolean = false) {
+		this.__size_check(SIZE.INT16);
+		if ( use_be ) {
+			this.buf.writeInt16BE(val, this.fp);
+		} else {
+			this.buf.writeInt16LE(val, this.fp);
+		}
+		this.fp += SIZE.INT16;
+	}
+
 	public ReadUint32(use_be: boolean = false) {
 		let ret = 0;
 		if ( use_be ) {
@@ -80,6 +114,27 @@ export class StreamBuffer {
 			this.buf.writeUInt32LE(val, this.fp);
 		}
 		this.fp += SIZE.UINT32;
+	}
+
+	public ReadInt32(use_be: boolean = false) {
+		let ret = 0;
+		if ( use_be ) {
+			ret = this.buf.readInt32BE(this.fp);
+		} else {
+			ret = this.buf.readInt32LE(this.fp);
+		}
+		this.fp += SIZE.INT32;
+		return ret;
+	}
+
+	public WriteInt32(val: number, use_be: boolean = false) {
+		this.__size_check(SIZE.UINT32);
+		if ( use_be ) {
+			this.buf.writeInt32BE(val, this.fp);
+		} else {
+			this.buf.writeInt32LE(val, this.fp);
+		}
+		this.fp += SIZE.INT32;
 	}
 
 	public ReadString(len: number) {
