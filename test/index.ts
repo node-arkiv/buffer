@@ -7,4 +7,6 @@ buf.WriteUint8(2);
 buf.WriteUint8(3);
 buf.WriteUint8(10);
 buf.WriteUint8(30);
-console.log(buf.ReadBufferEnd(0));
+
+buf.WriteString('Hello World!', 32);
+console.log(buf.buf, buf.ReadBufferEnd(0));

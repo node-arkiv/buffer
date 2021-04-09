@@ -145,9 +145,9 @@ export class StreamBuffer {
 		return ret;
 	}
 
-	public WriteString(val: string, encoding?: 'ascii' | 'utf8' | 'utf-8' | 'utf16le' | 'ucs2' | 'ucs-2' | 'base64' | 'latin1' | 'binary' | 'hex') {
-		this.__size_check(val.length);
-		this.buf.write(val, this.fp, encoding);
+	public WriteString(val: string, len: number = val.length, encoding?: 'ascii' | 'utf8' | 'utf-8' | 'utf16le' | 'ucs2' | 'ucs-2' | 'base64' | 'latin1' | 'binary' | 'hex') {
+		this.__size_check(len);
+		this.buf.write(val, this.fp, len, encoding);
 		this.fp += val.length;
 	}
 
