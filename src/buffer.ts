@@ -137,6 +137,58 @@ export class StreamBuffer {
 		this.fp += SIZE.INT32;
 	}
 
+	public ReadUint64(use_be: boolean = false) {
+		let ret: bigint = 0n;
+		if ( use_be ) {
+			ret = this.buf.readBigUInt64BE(this.fp);
+		} else {
+			ret = this.buf.readBigUInt64LE(this.fp);
+		}
+		this.fp += SIZE.UINT64;
+		return ret;
+	}
+
+	public WriteUint64(val: string|bigint|number, use_be: boolean = false) {
+		this.__size_check(SIZE.UINT64);
+
+		if ( typeof val === 'string' || typeof val === 'number' ) {
+			val = BigInt(val) as bigint;
+		}
+
+		if ( use_be ) {
+			this.buf.writeBigUInt64BE(val, this.fp);
+		} else {
+			this.buf.writeBigUInt64LE(val, this.fp);
+		}
+		this.fp += SIZE.UINT64;
+	}
+
+	public ReadInt64(use_be: boolean = false) {
+		let ret: bigint = 0n;
+		if ( use_be ) {
+			ret = this.buf.readBigInt64BE(this.fp);
+		} else {
+			ret = this.buf.readBigInt64LE(this.fp);
+		}
+		this.fp += SIZE.INT64;
+		return ret;
+	}
+
+	public WriteInt64(val: string|bigint|number, use_be: boolean = false) {
+		this.__size_check(SIZE.UINT64);
+
+		if ( typeof val === 'string' || typeof val === 'number' ) {
+			val = BigInt(val) as bigint;
+		}
+
+		if ( use_be ) {
+			this.buf.writeBigInt64BE(val, this.fp);
+		} else {
+			this.buf.writeBigInt64LE(val, this.fp);
+		}
+		this.fp += SIZE.INT64;
+	}
+
 	public ReadString(len: number) {
 		const b_ = this.buf.subarray(this.fp, this.fp + len);
 		let ret = '';

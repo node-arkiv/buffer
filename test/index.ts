@@ -8,5 +8,7 @@ buf.WriteUint8(3);
 buf.WriteUint8(10);
 buf.WriteUint8(30);
 
+buf.WriteUint64(12323487248572435);
+
 buf.WriteString('Hello World!', 32);
 console.log(buf.buf, buf.ReadBufferEnd(0));
