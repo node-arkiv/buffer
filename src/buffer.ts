@@ -1,21 +1,14 @@
 import { SIZE } from './type';
 
 export class StreamBuffer {
-	private fp: number = 0;
+
+	public fp: number = 0;
 
 	constructor(public buf: Buffer = Buffer.from('')) {
 
 	}
 
-	get Fp() {
-		return this.fp;
-	}
-
-	set Fp(fp: number) {
-		this.fp = fp;
-	}
-
-	get Length() {
+	get length() {
 		return this.buf.length;
 	}
 
@@ -27,33 +20,33 @@ export class StreamBuffer {
 		}
 	}
 
-	public ReadUint8() {
+	public readUint8() {
 		let ret = 0;
 		ret = this.buf.readUInt8(this.fp);
 		this.fp += SIZE.UINT8;
 		return ret;
 	}
 
-	public WriteUint8(val: number) {
+	public writeUint8(val: number) {
 		this.__size_check(SIZE.UINT8);
 		this.buf.writeUInt8(val, this.fp);
 		this.fp += SIZE.UINT8;
 	}
 
-	public ReadInt8() {
+	public readInt8() {
 		let ret = 0;
 		ret = this.buf.readInt8(this.fp);
 		this.fp += SIZE.INT8;
 		return ret;
 	}
 
-	public WriteInt8(val: number) {
+	public writeInt8(val: number) {
 		this.__size_check(SIZE.INT8);
 		this.buf.writeInt8(val, this.fp);
 		this.fp += SIZE.INT8;
 	}
 
-	public ReadUint16(use_be: boolean = false) {
+	public readUint16(use_be: boolean = false) {
 		let ret = 0;
 		if ( use_be ) {
 			ret = this.buf.readUInt16BE(this.fp);
@@ -64,7 +57,7 @@ export class StreamBuffer {
 		return ret;
 	}
 
-	public WriteUint16(val: number, use_be: boolean = false) {
+	public writeUint16(val: number, use_be: boolean = false) {
 		this.__size_check(SIZE.UINT16);
 		if ( use_be ) {
 			this.buf.writeUInt16BE(val, this.fp);
@@ -74,7 +67,7 @@ export class StreamBuffer {
 		this.fp += SIZE.UINT16;
 	}
 
-	public ReadInt16(use_be: boolean = false) {
+	public readInt16(use_be: boolean = false) {
 		let ret = 0;
 		if ( use_be ) {
 			ret = this.buf.readInt16BE(this.fp);
@@ -85,7 +78,7 @@ export class StreamBuffer {
 		return ret;
 	}
 
-	public WriteInt16(val: number, use_be: boolean = false) {
+	public writeInt16(val: number, use_be: boolean = false) {
 		this.__size_check(SIZE.INT16);
 		if ( use_be ) {
 			this.buf.writeInt16BE(val, this.fp);
@@ -95,7 +88,7 @@ export class StreamBuffer {
 		this.fp += SIZE.INT16;
 	}
 
-	public ReadUint32(use_be: boolean = false) {
+	public readUint32(use_be: boolean = false) {
 		let ret = 0;
 		if ( use_be ) {
 			ret = this.buf.readUInt32BE(this.fp);
@@ -106,7 +99,7 @@ export class StreamBuffer {
 		return ret;
 	}
 
-	public WriteUint32(val: number, use_be: boolean = false) {
+	public writeUint32(val: number, use_be: boolean = false) {
 		this.__size_check(SIZE.UINT32);
 		if ( use_be ) {
 			this.buf.writeUInt32BE(val, this.fp);
@@ -116,7 +109,7 @@ export class StreamBuffer {
 		this.fp += SIZE.UINT32;
 	}
 
-	public ReadInt32(use_be: boolean = false) {
+	public readInt32(use_be: boolean = false) {
 		let ret = 0;
 		if ( use_be ) {
 			ret = this.buf.readInt32BE(this.fp);
@@ -127,7 +120,7 @@ export class StreamBuffer {
 		return ret;
 	}
 
-	public WriteInt32(val: number, use_be: boolean = false) {
+	public writeInt32(val: number, use_be: boolean = false) {
 		this.__size_check(SIZE.UINT32);
 		if ( use_be ) {
 			this.buf.writeInt32BE(val, this.fp);
@@ -137,7 +130,7 @@ export class StreamBuffer {
 		this.fp += SIZE.INT32;
 	}
 
-	public ReadUint64(use_be: boolean = false) {
+	public readUint64(use_be: boolean = false) {
 		let ret: bigint = 0n;
 		if ( use_be ) {
 			ret = this.buf.readBigUInt64BE(this.fp);
@@ -148,7 +141,7 @@ export class StreamBuffer {
 		return ret;
 	}
 
-	public WriteUint64(val: string|bigint|number, use_be: boolean = false) {
+	public writeUint64(val: string|bigint|number, use_be: boolean = false) {
 		this.__size_check(SIZE.UINT64);
 
 		if ( typeof val === 'string' || typeof val === 'number' ) {
@@ -163,7 +156,7 @@ export class StreamBuffer {
 		this.fp += SIZE.UINT64;
 	}
 
-	public ReadInt64(use_be: boolean = false) {
+	public readInt64(use_be: boolean = false) {
 		let ret: bigint = 0n;
 		if ( use_be ) {
 			ret = this.buf.readBigInt64BE(this.fp);
@@ -174,7 +167,7 @@ export class StreamBuffer {
 		return ret;
 	}
 
-	public WriteInt64(val: string|bigint|number, use_be: boolean = false) {
+	public writeInt64(val: string|bigint|number, use_be: boolean = false) {
 		this.__size_check(SIZE.UINT64);
 
 		if ( typeof val === 'string' || typeof val === 'number' ) {
@@ -189,7 +182,7 @@ export class StreamBuffer {
 		this.fp += SIZE.INT64;
 	}
 
-	public ReadString(len: number) {
+	public readString(len: number) {
 		const b_ = this.buf.subarray(this.fp, this.fp + len);
 		let ret = '';
 		ret = b_.toString();
@@ -197,19 +190,19 @@ export class StreamBuffer {
 		return ret;
 	}
 
-	public WriteString(val: string, len: number = val.length, encoding?: 'ascii' | 'utf8' | 'utf-8' | 'utf16le' | 'ucs2' | 'ucs-2' | 'base64' | 'latin1' | 'binary' | 'hex') {
+	public writeString(val: string, len: number = val.length, encoding?: 'ascii' | 'utf8' | 'utf-8' | 'utf16le' | 'ucs2' | 'ucs-2' | 'base64' | 'latin1' | 'binary' | 'hex') {
 		this.__size_check(len);
 		this.buf.write(val, this.fp, len, encoding);
 		this.fp += len;
 	}
 
-	public ReadBuffer(len: number) {
+	public readBuffer(len: number) {
 		const ret = this.buf.subarray(this.fp, this.fp + len);
 		this.fp += len;
 		return ret;
 	}
 
-	public WriteBuffer(val: Buffer) {
+	public writeBuffer(val: Buffer) {
 		this.__size_check(val.length);
 		for ( const v of val ) {
 			this.buf[this.fp] = v;
@@ -217,14 +210,14 @@ export class StreamBuffer {
 		}
 	}
 
-	public ReadBufferNew(len: number) {
+	public readBufferNew(len: number) {
 		const b_ = this.buf.subarray(this.fp, this.fp + len);
 		const ret = Buffer.from(b_);
 		this.fp += len;
 		return ret;
 	}
 
-	public ReadBufferEnd(fp: number = this.fp) {
+	public readBufferEnd(fp: number = this.fp) {
 		const ret = this.buf.subarray(fp, this.buf.length);
 		this.fp = this.buf.length;
 		return ret;

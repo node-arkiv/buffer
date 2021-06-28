@@ -1,14 +1,14 @@
 import { StreamBuffer } from '../src/index';
 
 const buf = new StreamBuffer();
-buf.WriteUint8(5);
-buf.WriteUint8(1);
-buf.WriteUint8(2);
-buf.WriteUint8(3);
-buf.WriteUint8(10);
-buf.WriteUint8(30);
+buf.writeUint8(5);
+buf.writeUint8(1);
+buf.writeUint8(2);
+buf.writeUint8(3);
+buf.writeUint8(10);
+buf.writeUint8(30);
 
-buf.WriteUint64(12323487248572435);
+buf.writeUint64(12323487248572435);
 
-buf.WriteString('Hello World!', 32);
-console.log(buf.buf, buf.ReadBufferEnd(0));
+buf.writeString('Hello World!', 32);
+console.log(buf.buf, buf.readBufferEnd(0));
